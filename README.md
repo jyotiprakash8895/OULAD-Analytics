@@ -17,31 +17,22 @@ Raw CSV Data → Python Cleaning → SQL Server Star Schema → SQL Queries → 
 
 ## Tools & Technologies
 
-| Tool                 | Version | Purpose                   |
-|----------------------|---------|---------------------------|
-| Python               | 3.13.3  | Data cleaning and loading |
-| Pandas               | 2.2.3   | Data manipulation         |
-| SQLAlchemy           | 2.0.41  | SQL Server connection     |
-| SQL Server (SSMS 21) | local   | Star schema and queries   |
-| Power BI Desktop     | latest  | Dashboard and KPIs        |
+- Python: 3.13.3              (Data cleaning and loading)
+- Pandas: 2.2.3               (Data manipulation)
+- SQLAlchemy: 2.0.41          (SQL Server connection)
+- SQL Server: SSMS 21         (Queries)
+- Power BI Desktop: latest    (Dashboard and KPIs)
 
 ---
 
 ## Dataset
 
 **Source:** [Open University Learning Analytics Dataset (OULAD)](https://analyse.kmi.open.ac.uk/open-dataset)  
-**Also available:** [UCI ML Repository](https://archive.ics.uci.edu/dataset/349/open+university+learning+analytics+dataset)
 
-
-| File                    | Rows       | Description                            |
-|-------------------------|------------|----------------------------------------|
-| studentInfo.csv         | 32,593     | Student demographics and final result  |
-| studentRegistration.csv | 32,593     | Registration and unregistration dates  |
-| courses.csv             | 22         | Course module information              |
-| assessments.csv         | 206        | Assessment types and weights           |
-| studentAssessment.csv   | 173,912    | Student scores per assessment          |
-| vle.csv                 | 6,364      | Virtual learning environment resources |
-| studentVle.csv          | 10,655,280 | Student clicks per resource per day    |
+- 32,593 students
+- 10.6M+ engagement records
+- 7 courses
+- Assessment, registration, VLE activity, and demographic data
 
 > Raw data files are not included in this repository due to size. Download from the links above and place in `data/oulad/` folder.
 
@@ -93,36 +84,22 @@ dim_vle ── fact_activity ─|
                     dim_registration
                     dim_course
 ```
+Star schema with:
+- 2 fact tables: `fact_activity`, `fact_assessment`
+- 6 dimension tables: `dim_student`, `dim_enrollment`, `dim_course `, `dim_assessment`, `dim_vle`, `dim_registration`
+ 
 See [Schema](dashboard/schema.png)
-
-
-| Table            | Type      | Source                  |
-|------------------|-----------|-------------------------|
-| fact_activity    | Fact      | studentVle.csv          |
-| fact_assessment  | Fact      | studentAssessment.csv   |
-| dim_student      | Dimension | studentInfo.csv         |
-| dim_enrollment   | Dimension | studentInfo.csv         |
-| dim_course       | Dimension | courses.csv             |
-| dim_assessment   | Dimension | assessments.csv         |
-| dim_vle          | Dimension | vle.csv                 |
-| dim_registration | Dimension | studentRegistration.csv |
 
 ---
 
 ## SQL Queries
 
-| # | Query                       | Purpose                     |
-|---|-----------------------------|-----------------------------|
-| 1 | Pass/Fail count per course  | Course outcome overview     |
-| 2 | Success rate per course     | Identify best/worst courses |
-| 3 | Previous attempts vs result | Retention pattern           |
-| 4 | Avg clicks per course       | Engagement by course        |
-| 5 | Activity type clicks        | Most used resources         |
-| 6 | Clicks vs pass rate         | Engagement predicts outcome |
-| 7 | Never clicked students      | Zero engagement detection   |
-| 8 | Week dropout analysis       | When students disengage     |
-| 9 | RFM segmentation            | Student engagement segments |
-
+Performed business-focused SQL analysis including:
+- Pass/fail trends
+- Engagement vs performance
+- Dropout analysis
+- Resource usage analysis
+- RFM student segmentation
 ---
 
 ## Power BI Dashboard
@@ -132,14 +109,15 @@ See [Schema](dashboard/schema.png)
 - Final results by course (stacked bar)
 - Average engagement by course
 - Demographics: gender, age band, region
-
+  
+![Dashboard](dashboard/page1_overview.png)
 ### Page 2 — Engagement & Risk Analysis
 - RFM student segments by final result (100% stacked bar)
 - Most used resources by total clicks
 - At risk students table
 - Engagement by result group
-
-See [Dashboard](dashboard/dashboard.pdf)
+  
+![Dashboard](dashboard/page2_engagement.png)
 
 ---
 
