@@ -1,4 +1,7 @@
-# Ignore datasets
-data/cleaned
-data/oulad
+# Ignore dataset contents but keep folders
+data/cleaned/*
+!data/cleaned/.gitkeep
+
+data/oulad/*
+!data/oulad/.gitkeep
 
